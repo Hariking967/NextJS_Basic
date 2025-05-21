@@ -42,4 +42,4 @@ export default function Item({ result }: Props) {
         )
 
     return content
-}  
+}    
