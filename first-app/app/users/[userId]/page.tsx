@@ -6,45 +6,42 @@ import UserPosts from './components/userPosts'
 import type { Metadata } from 'next'
 import getAllUsers from '@/lib/getAllUsers'
 
-type Params = {
-    params: {userId: string }
+export async function generateMetadata({
+  params: { userId },
+}: {
+  params: { userId: string }
+}): Promise<Metadata> {
+  const user = await getUser(userId)
+  return {
+    title: user.name,
+    description: `This is the page of ${user.name}`,
+  }
 }
 
-export async function generateMetadata({params: {userId}} : Params): Promise<Metadata>
-{
-    const userData: Promise<User> = getUser(userId);
-    const user: User = await userData;
-    return{
-        title: user.name,
-        description: `This is the page of ${user.name}`
-    };
-}
+export default async function UserPage({
+  params: { userId },
+}: {
+  params: { userId: string }
+}) {
+  const userData = getUser(userId)
+  const userPostData = getUserPost(userId)
 
-export default async function UserPage({params : {userId}}:Params) {
-    const userData: Promise<User> = getUser(userId);
-    const userPostData: Promise<Post[]> = getUserPost(userId);
+  const user = await userData
 
-    //const [user,userPosts] = await Promise.all([userData,userPostData])
-
-    const user = await userData;
   return (
     <>
-        <h2>{user.name}</h2>
-        <br/>
-        <Suspense fallback={<h2>Loading...</h2>}>
-            <UserPosts promise={userPostData}></UserPosts>
-        </Suspense>
+      <h2>{user.name}</h2>
+      <br />
+      <Suspense fallback={<h2>Loading...</h2>}>
+        <UserPosts promise={userPostData} />
+      </Suspense>
     </>
   )
 }
 
-export async function generateStaticParams()
-{
-    const usersData: Promise<User[]> = getAllUsers();
-    const users = await usersData;
-    return users.map(user=>{
-        {
-            userId: user.id.toString()
-        }
-    })
+export async function generateStaticParams() {
+  const users = await getAllUsers()
+  return users.map(user => ({
+    userId: user.id.toString(),
+  }))
 }
