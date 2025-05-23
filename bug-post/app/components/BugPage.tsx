@@ -16,7 +16,6 @@ export default function BugPage() {
     ))
   return (
     <>
-    <p>Posted by: {}</p>
     <div className='flex flex-col'>
       {bugContent}
     </div>

@@ -3,6 +3,11 @@ import data from '../../data/bugs.json'
 import { RateLimiter } from "limiter";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
+import fs from 'fs';
+import path from 'path';
+import getBugIndexById from "@/app/lib/getBugIndexById";
+
+const filePath = path.join(process.cwd(), 'data', 'bugs.json');
 
 let bugDatas = data.bugs;
 
@@ -19,6 +24,19 @@ type BugType = {
     answered: string
 }
 
+export async function GET()
+{
+    const remaingTokens = await limiter.removeTokens(1);
+    if (remaingTokens > 0)
+    {
+        return NextResponse.json(bugDatas);
+    }
+    else
+    {
+        return NextResponse.json('Too many requests. Try later!',{status: 429});
+    }
+}
+
 export async function POST(request: NextRequest)
 {
     const remaingTokens = await limiter.removeTokens(1);
@@ -27,6 +45,46 @@ export async function POST(request: NextRequest)
     bugDatas.push(newBug);
     if (remaingTokens > 0)
     {
+        fs.writeFileSync(filePath, JSON.stringify(bugDatas));
+        return NextResponse.json(bugDatas);
+    }
+    else
+    {
+        return NextResponse.json('Too many requests. Try later!',{status: 429});
+    }
+}
+
+export async function PUT(request: NextRequest)
+{
+    const remaingTokens = await limiter.removeTokens(1);
+    const body = await request.json();
+    const updateBug: BugType = {id:body.id, title: body.title, desc:body.desc, userid:body.user, answered: "false"};
+    const { id, title, desc, userid, answered} = body;
+    const bugIndex: number = getBugIndexById(id);
+    bugDatas[bugIndex].title = title;
+    bugDatas[bugIndex].desc = desc;
+    if (remaingTokens > 0)
+    {
+        fs.writeFileSync(filePath, JSON.stringify(bugDatas));
+        return NextResponse.json(bugDatas);
+    }
+    else
+    {
+        return NextResponse.json('Too many requests. Try later!',{status: 429});
+    }
+}
+
+export async function DELETE(request: NextRequest)
+{
+    const remaingTokens = await limiter.removeTokens(1);
+    const body = await request.json();
+    const updateBug: BugType = {id:body.id, title: body.title, desc:body.desc, userid:body.user, answered: "false"};
+    const { id } = body;
+    const bugIndex: number = getBugIndexById(id);
+    bugDatas.splice(bugIndex, 1);
+    if (remaingTokens > 0)
+    {
+        fs.writeFileSync(filePath, JSON.stringify(bugDatas));
         return NextResponse.json(bugDatas);
     }
     else
