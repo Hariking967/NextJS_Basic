@@ -1,0 +1,14 @@
+{
+    "users" : [
+        {
+            "id" : 1,
+            "userName" : "Sri Hari",
+            "email" : "harigallery9@gmail.com"
+        },
+        {
+            "id" : 2,
+            "userName" : "Supriya",
+            "email" : "supriya.pdy@gmail.com"
+        }
+    ]
+}

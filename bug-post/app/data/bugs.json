@@ -1,0 +1,39 @@
+{
+    "bugs" : [
+        {
+            "id" : 1,
+            "title" : "Centering a div 1",
+            "desc" : "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
+            "answered" : "true",
+            "userid" : 1
+        },
+         {
+            "id" : 2,
+            "title" : "Centering a div 2",
+            "desc" : "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
+            "answered" : "false",
+            "userid" : 1
+        },
+         {
+            "id" : 3,
+            "title" : "Centering a div 3",
+            "desc" : "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
+            "answered" : "true",
+            "userid" : 2
+        },
+         {
+            "id" : 4,
+            "title" : "Centering a div 4",
+            "desc" : "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
+            "answered" : "false",
+            "userid" : 2
+        },
+        {
+            "id" : 5,
+            "title" : "Centering a div 5",
+            "desc" : "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
+            "answered" : "false",
+            "userid" : 2
+        }
+    ]
+}
