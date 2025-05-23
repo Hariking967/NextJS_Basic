@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function BugPage() {
     let bugDatas = data.bugs;
     let bugContent = bugDatas.map(bug=>(
-        <Link key={bug.id} href= {`${bug.id}`}>
+        <Link key={bug.id} href= {`/bug/${bug.id}`}>
             <div className='flex flex-row'>
                 <p className='text-3xl m-3'>{bug.id}</p>
                 <p className='text-3xl m-3'>{bug.title}</p>

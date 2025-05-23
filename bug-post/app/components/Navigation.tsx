@@ -13,8 +13,8 @@ export default async function Navigation() {
         {
             return(
                 <div>
-                    <button className='bg-blue-400 font-mono m-2 p-2'>Sign UP</button>
-                    <button className='bg-green-600 font-mono m-2 p-2'>Sign IN</button>
+                    <Link href='/signup' className='bg-blue-400 font-mono m-2 p-2'>Sign UP</Link>
+                    <Link href='/signin' className='bg-green-600 font-mono m-2 p-2'>Sign IN</Link>
                 </div>
             );
         }

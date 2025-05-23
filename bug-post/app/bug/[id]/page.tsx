@@ -1,6 +1,6 @@
 import React from 'react'
-import data from '../data/bugs.json'
-import getUserById from '../lib/getUserById'
+import data from '../../data/bugs.json'
+import getUserById from '../../lib/getUserById'
 type Props = { params : {id : number} }
 
 export default function page({params: {id}} : Props) {

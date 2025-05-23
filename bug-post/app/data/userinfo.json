@@ -3,12 +3,14 @@
         {
             "id" : 1,
             "userName" : "Sri Hari",
-            "email" : "harigallery9@gmail.com"
+            "email" : "harigallery9@gmail.com",
+            "pwd" : "hari1*" 
         },
         {
             "id" : 2,
             "userName" : "Supriya",
-            "email" : "supriya.pdy@gmail.com"
+            "email" : "supriya.pdy@gmail.com",
+            "pwd" : "supe1*"
         }
     ]
 }

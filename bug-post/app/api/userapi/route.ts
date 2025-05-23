@@ -19,7 +19,19 @@ let limiter = new RateLimiter({
 type userType = {
     id : number,
     userName : string,
-    email : string
+    email : string,
+    pwd : string
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
 }
 
 export async function GET()
@@ -39,7 +51,7 @@ export async function POST(request: NextRequest)
 {
     const remaingTokens = await limiter.removeTokens(1);
     const body = await request.json();
-    const updateUser: userType = {id:body.id, userName: body.username, email : body.email};
+    const updateUser: userType = {id:body.id, userName: body.username, email : body.email, pwd : body.pwd};
     userDatas.push(updateUser);
     if (remaingTokens > 0)
     {
@@ -56,7 +68,7 @@ export async function PUT(request: NextRequest)
 {
     const remaingTokens = await limiter.removeTokens(1);
     const body = await request.json();
-    const updateuser: userType = {id:body.id, userName: body.username, email : body.email};
+    const updateuser: userType = {id:body.id, userName: body.username, email : body.email, pwd : body.pwd};
     const { id, userName, email} = body;
     const userIndex: number = getUserIndexById(id);
     userDatas[userIndex].userName = userName;
@@ -76,7 +88,7 @@ export async function DELETE(request: NextRequest)
 {
     const remaingTokens = await limiter.removeTokens(1);
     const body = await request.json();
-    const updateuser: userType = {id:body.id, userName: body.username, email : body.email};
+    const updateuser: userType = {id:body.id, userName: body.username, email : body.email, pwd : body.pwd};
     const { id } = body;
     const userIndex: number = getUserIndexById(id);
     userDatas.splice(userIndex, 1);
