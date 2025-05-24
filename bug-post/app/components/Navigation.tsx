@@ -35,10 +35,10 @@ export default async function Navigation() {
   return (
     <div className='bg-blue-500 flex flex-row justify-between items-center h-20'>
         <div className='flex flex-row items-center'>
-            <h2 className='text-4xl font-mono mr-7'>Stack Overflow</h2>
+            <h2 className='text-4xl font-mono mr-7 ml-3'>Stack Overflow</h2>
             <Link href="/" className="text-2xl m-1.5 text-white">Home |</Link>
-            <Link href="/" className="text-2xl m-1.5 text-white">About |</Link>
-            <Link href="/" className="text-2xl m-1.5 text-white">Help |</Link>
+            <Link href="/about" className="text-2xl m-1.5 text-white">About |</Link>
+            <Link href="/help" className="text-2xl m-1.5 text-white">Help |</Link>
         </div>
       {logElement()}
     </div>

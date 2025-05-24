@@ -1,11 +1,10 @@
 'use client'
-import React, { use } from 'react'
+import React from 'react'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { cookies } from 'next/headers'
+import { useRouter } from 'next/navigation';
 
 export default function SingIN() {
-  const [form, setForm] = useState({userName: '', email: '', pwd: ''})
+  const [form, setForm] = useState({userName: '', email: '', pwd: ''});
   const router = useRouter();
   async function handleSubmit(e: React.FormEvent)
   {
@@ -19,51 +18,37 @@ export default function SingIN() {
       'Content-Type': 'application/json',
     }
     });
-
-    //check signin related errors
     const getData = await GETuserData.json();
-    let contains = -1;
+    let contains = false;
     for (let i=0; i < getData.length; i++){
-      console.log(i);
-      console.log(form.userName);
-      console.log(getData[i].userName);
       if (form.userName == getData[i].userName)
       {
-        contains = i;
+        contains = true;
       }
     }
-    console.log(contains);
-    if (contains == -1)
+    if (contains)
     {
       let errorp = document.getElementById('error_msg')
       if (errorp)
       {
-        errorp.innerText = "No such user"
-        return;
+        errorp.innerText = "User already exists. Please signin";
       }
     }
-    if (form.email != getData[contains].email)
-    {
-      let errorp = document.getElementById('error_msg')
-      if (errorp)
-      {
-        errorp.innerText = "Email incorrect";
-        return;
-      }
-    }
-    if (form.pwd != getData[contains].pwd)
-    {
-      let errorp = document.getElementById('error_msg')
-      if (errorp)
-      {
-        errorp.innerText = "Password incorrect";
-        return;
-      }
-    }
-
-    //change cookies
-    
-    router.push('/');
+    let newId = getData.length+1;
+    const userData = await fetch('http://localhost:3000/api/userapi', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: newId,
+      userName: form.userName,
+      email: form.email,
+      pwd: form.pwd
+    })
+  });
+  setForm({userName: '', email: '', pwd: ''});
+  router.push('/');
   }
   function handleChange(e: React.ChangeEvent<HTMLInputElement>)
   {

@@ -1,16 +1,28 @@
 {
-    "users" : [
-        {
-            "id" : 1,
-            "userName" : "Sri Hari",
-            "email" : "harigallery9@gmail.com",
-            "pwd" : "hari1*" 
-        },
-        {
-            "id" : 2,
-            "userName" : "Supriya",
-            "email" : "supriya.pdy@gmail.com",
-            "pwd" : "supe1*"
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "userName": "Sri Hari",
+      "email": "harigallery9@gmail.com",
+      "pwd": "hari1*"
+    },
+    {
+      "id": 2,
+      "userName": "Supriya",
+      "email": "supriya.pdy@gmail.com",
+      "pwd": "supe1*"
+    },
+    {
+      "id": 3,
+      "userName": "Siva",
+      "email": "sivacabin@gmail.com",
+      "pwd": "siva1*"
+    },
+    {
+      "id": 4,
+      "userName": "Jeeva",
+      "email": "alok@gmail.com",
+      "pwd": "alok1*"
+    }
+  ]
 }

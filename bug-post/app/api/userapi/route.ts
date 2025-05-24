@@ -7,7 +7,8 @@ import fs from 'fs';
 import path from 'path';
 import getUserIndexById from "@/app/lib/getUserIndexById";
 
-const filePath = path.join(process.cwd(), 'data', 'userinfo.json');
+const filePath = path.join(process.cwd(),'app', 'data', 'userinfo.json');
+console.log(filePath);
 
 let userDatas = data.users;
 
@@ -15,13 +16,6 @@ let limiter = new RateLimiter({
     tokensPerInterval: 5,
     interval : 'second'
 })
-
-type userType = {
-    id : number,
-    userName : string,
-    email : string,
-    pwd : string
-}
 
 export async function OPTIONS() {
   return new NextResponse(null, {
@@ -34,71 +28,70 @@ export async function OPTIONS() {
   });
 }
 
+function withCORS(response: NextResponse) {
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  return response;
+}
+
 export async function GET()
 {
-    const remaingTokens = await limiter.removeTokens(1);
-    if (remaingTokens > 0)
+    if (limiter.getTokensRemaining() <= 0)
     {
-        return NextResponse.json(userDatas);
+        return withCORS(NextResponse.json('Too many requests. Try later!',{status: 429}));
     }
-    else
-    {
-        return NextResponse.json('Too many requests. Try later!',{status: 429});
-    }
+    await limiter.removeTokens(1);
+    return withCORS(NextResponse.json(userDatas));
 }
 
 export async function POST(request: NextRequest)
 {
-    const remaingTokens = await limiter.removeTokens(1);
+    if (limiter.getTokensRemaining() <= 0)
+    {
+        return withCORS(NextResponse.json('Too many requests. Try later!',{status: 429}));
+    }
+    await limiter.removeTokens(1);
     const body = await request.json();
     const updateUser: userType = {id:body.id, userName: body.username, email : body.email, pwd : body.pwd};
     userDatas.push(updateUser);
-    if (remaingTokens > 0)
-    {
-        fs.writeFileSync(filePath, JSON.stringify(updateUser));
-        return NextResponse.json(userDatas);
-    }
-    else
-    {
-        return NextResponse.json('Too many requests. Try later!',{status: 429});
-    }
-}
+    try{fs.writeFileSync(filePath, JSON.stringify({ users: userDatas }, null, 2));}
+    catch(error){return withCORS(NextResponse.json({ error: "Failed to write data" }, { status: 500 }));}
+    return withCORS(NextResponse.json(userDatas));
+}   
 
 export async function PUT(request: NextRequest)
 {
-    const remaingTokens = await limiter.removeTokens(1);
+    if (limiter.getTokensRemaining() <= 0)
+    {
+        return withCORS(NextResponse.json('Too many requests. Try later!',{status: 429}));
+    }
+    await limiter.removeTokens(1);
     const body = await request.json();
     const updateuser: userType = {id:body.id, userName: body.username, email : body.email, pwd : body.pwd};
     const { id, userName, email} = body;
     const userIndex: number = getUserIndexById(id);
     userDatas[userIndex].userName = userName;
     userDatas[userIndex].email = email;
-    if (remaingTokens > 0)
-    {
-        fs.writeFileSync(filePath, JSON.stringify(userDatas));
-        return NextResponse.json(userDatas);
-    }
-    else
-    {
-        return NextResponse.json('Too many requests. Try later!',{status: 429});
-    }
+    try
+    {fs.writeFileSync(filePath, JSON.stringify({ users: userDatas }, null, 2));}
+    catch(error){return withCORS(NextResponse.json({ error: "Failed to write data" }, { status: 500 }));}
+    return withCORS(NextResponse.json(userDatas));
 }
 
 export async function DELETE(request: NextRequest)
 {
-    const remaingTokens = await limiter.removeTokens(1);
+    if (limiter.getTokensRemaining() <= 0)
+    {
+        return withCORS(NextResponse.json('Too many requests. Try later!',{status: 429}));
+    }
+    await limiter.removeTokens(1);
     const body = await request.json();
     const updateuser: userType = {id:body.id, userName: body.username, email : body.email, pwd : body.pwd};
     const { id } = body;
     const userIndex: number = getUserIndexById(id);
     userDatas.splice(userIndex, 1);
-    if (remaingTokens > 0)
-    {
-        fs.writeFileSync(filePath, JSON.stringify(userDatas));
-        return NextResponse.json(userDatas);
-    }
-    else
-    {
-        return NextResponse.json('Too many requests. Try later!',{status: 429});
-    }
+    try{fs.writeFileSync(filePath, JSON.stringify({ users: userDatas }, null, 2));}
+    catch(error){return withCORS(NextResponse.json({ error: "Failed to write data" }, { status: 500 }));}
+    return withCORS(NextResponse.json(userDatas));
 }
