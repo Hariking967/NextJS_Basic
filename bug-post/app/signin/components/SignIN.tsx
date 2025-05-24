@@ -70,6 +70,7 @@ export default function SingIN() {
       body: JSON.stringify({ userId }),
       credentials: 'include',
     });
+    window.location.href='/';
     router.push('/');
   }
   function handleChange(e: React.ChangeEvent<HTMLInputElement>)

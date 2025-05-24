@@ -55,6 +55,7 @@ export default function SingIN() {
       body: JSON.stringify({ newId }),
       credentials: 'include',
     });
+    window.location.href='/';
   setForm({userName: '', email: '', pwd: ''});
   
   router.push('/');
