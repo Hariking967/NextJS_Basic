@@ -1,8 +1,8 @@
 'use client'
-import React, { use } from 'react'
+import React from 'react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { cookies } from 'next/headers'
+import Link from 'next/link'
 
 export default function SingIN() {
   const [form, setForm] = useState({userName: '', email: '', pwd: ''})
@@ -62,7 +62,14 @@ export default function SingIN() {
     }
 
     //change cookies
-    
+    const userId = getData[contains].id;
+
+    await fetch('/api/set-cookie', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId }),
+      credentials: 'include',
+    });
     router.push('/');
   }
   function handleChange(e: React.ChangeEvent<HTMLInputElement>)
@@ -70,7 +77,7 @@ export default function SingIN() {
     setForm({...form, [e.target.name] : e.target.value})
   }
   return (
-    <div className='flex flex-col items-center bg-blue-400 w-150 h-110 rounded-2xl ml-120 mt-20 p-5 justify-center'>
+    <div className='flex flex-col items-center bg-blue-400 w-150 rounded-2xl ml-120 mt-20 p-5 justify-center'>
       <form onSubmit={handleSubmit}>
           <h2 className='p-2 m-2 text-3xl'>Name</h2> 
           <input value={form.userName} className='bg-white rounded-2xl h-10 w-100 text-black pl-2' name='userName' onChange={handleChange} type='text' placeholder='Enter Name...'></input>
@@ -82,6 +89,8 @@ export default function SingIN() {
           <button className='bg-green-600 h-10 text-white text-2xl rounded-2xl ml-40 mb-10 border-2 border-black w-30' type='submit'>Submit</button>
       </form>
       <p id='error_msg' className='bg-red-600'></p>
+      <span>Create New Account👉</span>
+      <Link href='/signup'>Sign UP</Link>
     </div>
   )
 }

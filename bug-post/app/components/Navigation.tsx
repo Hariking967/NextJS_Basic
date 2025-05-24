@@ -1,15 +1,16 @@
 import React from 'react'
 import { cookies } from 'next/headers'
-import { promises as fs } from 'fs'
-import path from 'path'
 import data from '../data/userinfo.json'
 import Link from 'next/link'
+import Logout from './Logout'
 
 export default async function Navigation() {
     const cookieStore = await cookies()
-    const loggedin = cookieStore.get('loggedin') as undefined|number
+    const datac = cookieStore.get('loggedin');
+    let loggedin = Number(datac?.value);
+    console.log(loggedin);
     const logElement = ()=>{
-        if (loggedin == undefined)
+        if (loggedin == undefined || loggedin == -1)
         {
             return(
                 <div>
@@ -20,7 +21,7 @@ export default async function Navigation() {
         }
         else{
             const userDatas = data.users;
-            let username = null
+            let username = 'null';
             userDatas.forEach(user=>{
                 if (user.id == loggedin)
                 {
@@ -28,7 +29,10 @@ export default async function Navigation() {
                 }
             })
             return(
-                <p>{username}</p>
+                <div className="flex items-center space-x-4 bg-gray-800 p-3 rounded-md">
+                <p className="text-white text-lg font-semibold">{username}</p>
+                <Logout></Logout>
+                </div>
             );
         }
     }

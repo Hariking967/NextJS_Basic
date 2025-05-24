@@ -47,7 +47,16 @@ export default function SingIN() {
       pwd: form.pwd
     })
   });
+  //change cookies
+
+    await fetch('/api/set-cookie', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ newId }),
+      credentials: 'include',
+    });
   setForm({userName: '', email: '', pwd: ''});
+  
   router.push('/');
   }
   function handleChange(e: React.ChangeEvent<HTMLInputElement>)
