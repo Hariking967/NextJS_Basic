@@ -1,39 +1,79 @@
 {
-    "bugs" : [
-        {
-            "id" : 1,
-            "title" : "Centering a div 1",
-            "desc" : "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
-            "answered" : "true",
-            "userid" : 1
-        },
-         {
-            "id" : 2,
-            "title" : "Centering a div 2",
-            "desc" : "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
-            "answered" : "false",
-            "userid" : 1
-        },
-         {
-            "id" : 3,
-            "title" : "Centering a div 3",
-            "desc" : "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
-            "answered" : "true",
-            "userid" : 2
-        },
-         {
-            "id" : 4,
-            "title" : "Centering a div 4",
-            "desc" : "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
-            "answered" : "false",
-            "userid" : 2
-        },
-        {
-            "id" : 5,
-            "title" : "Centering a div 5",
-            "desc" : "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
-            "answered" : "false",
-            "userid" : 2
-        }
-    ]
+  "bugDatas": [
+    {
+      "id": 1,
+      "title": "Centering a div 1",
+      "desc": "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
+      "answered": "true",
+      "userid": 1,
+      "time": "time"
+    },
+    {
+      "id": 2,
+      "title": "Centering a div 2",
+      "desc": "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
+      "answered": "false",
+      "userid": 1,
+      "time": "time"
+    },
+    {
+      "id": 3,
+      "title": "Centering a div 3",
+      "desc": "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
+      "answered": "true",
+      "userid": 2,
+      "time": "time"
+    },
+    {
+      "id": 4,
+      "title": "Centering a div 4",
+      "desc": "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
+      "answered": "false",
+      "userid": 2,
+      "time": "time"
+    },
+    {
+      "id": 5,
+      "title": "Centering a div 5",
+      "desc": "<div style='width: 200px; height: 100px; background: red;'>\n<div style='width: 100px; height: 50px; background: blue; margin: auto;'>\nI'm not centered\n</div>\n</div>",
+      "answered": "false",
+      "userid": 2,
+      "time": "time"
+    },
+    {
+      "id": 6,
+      "title": "numbers = [10, 20, 30, 40, 50]\n\nfor i in range(len(numbers) + 1):  # I thought this would go through all elements\n    print(numbers[i])",
+      "desc": "",
+      "answered": "false",
+      "time": "2025-05-24T17:26:45.944Z"
+    },
+    {
+      "id": 7,
+      "title": "numbers = [10, 20, 30, 40, 50]\n\nfor i in range(len(numbers) + 1):  # I thought this would go through all elements\n    print(numbers[i])",
+      "desc": "",
+      "answered": "false",
+      "time": "2025-05-24T17:38:47.270Z"
+    },
+    {
+      "id": 8,
+      "title": "numbers = [10, 20, 30, 40, 50]\n\nfor i in range(len(numbers) + 1):  # I thought this would go through all elements\n    print(numbers[i])",
+      "desc": "",
+      "answered": "false",
+      "time": "2025-05-24T17:47:34.734Z"
+    },
+    {
+      "id": 8,
+      "title": "New Incorrect Use of Array Length in Python",
+      "desc": "",
+      "answered": "false",
+      "time": "2025-05-24T17:54:37.604Z"
+    },
+    {
+      "id": 9,
+      "title": "Newest Incorrect Use of Array Length in Python",
+      "desc": "",
+      "answered": "false",
+      "time": "2025-05-24T17:55:46.038Z"
+    }
+  ]
 }
