@@ -1,0 +1,11 @@
+{
+    "answers":
+    [
+        {
+            "id":1,
+            "fromUserId": 2,
+            "bugId": 6,
+            "answer":"array index starts form 0 and goes till one les than the length of array"
+        }
+    ]
+}

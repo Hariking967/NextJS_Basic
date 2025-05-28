@@ -6,7 +6,6 @@ export default function page() {
   let [userId, setUserId] = useState(-1);
   let [title, setTitle] = useState('');
   let [desc, setDesc] = useState('');
-  let [code, setCode] = useState('');
 
 
    useEffect(()=>{
@@ -18,8 +17,7 @@ export default function page() {
       const data = await res.json();
       if (data.loggedin)
       {
-        setUserId(data);
-        console.log(Number(data.loggedin));
+        setUserId(Number(data.loggedin));
       }
       }
       fetchCookie();
@@ -39,7 +37,7 @@ export default function page() {
       }
 
     const bugs = await GETbugs.json();
-    console.log(bugs);
+    console.log('userID:',userId);
     let bugId = bugs.length+1;
     const now = new Date();
     const time = now.toISOString();
@@ -65,8 +63,6 @@ export default function page() {
         <textarea onChange={(e)=>setTitle(e.target.value)} className='bg-white h-12 rounded-2xl text-black p-3 resize-none' placeholder='Enter Title...'></textarea>
         <p className='leading-loose text-4xl'>Description</p>
         <textarea onChange={(e)=>setDesc(e.target.value)} className='bg-white h-20 rounded-2xl text-black p-3 resize-none' placeholder='Enter Description...'></textarea>
-        <p className='leading-loose text-4xl'>Code</p>
-        <textarea onChange={(e)=>setCode(e.target.value)} className='bg-white h-50 rounded-2xl text-black p-3 resize-none font-mono' placeholder='Enter Code...'></textarea>
         <button onClick={handleSubmit} className='bg-red-500 p-3 m-3 w-50 ml-42 text-2xl'>Post</button>
     </div>
   )

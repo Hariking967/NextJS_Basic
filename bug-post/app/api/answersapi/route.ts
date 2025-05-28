@@ -1,20 +1,17 @@
-import { cookies } from "next/headers";
-import data from '../../data/bugs.json'
+import { NextRequest,NextResponse } from "next/server";
 import { RateLimiter } from "limiter";
-import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
-import fs from 'fs';
+import data from '../../data/answers.json'
+import fs from 'fs'
 import path from 'path';
-import getBugIndexById from "@/app/lib/getBugIndexById";
-
-const filePath = path.join(process.cwd(), 'app', 'data', 'bugs.json');
-
-let bugDatas = data.bugDatas;
+import getAnswerIndexById from "@/app/lib/getAnswerIndexById";
 
 let limiter = new RateLimiter({
     tokensPerInterval: 5,
-    interval : 'second'
+    interval: "second"
 })
+
+let answers = data.answers
+const filePath = path.join(process.cwd(), 'app', 'data', 'answers.json')
 
 export async function OPTIONS() {
   return new NextResponse(null, {
@@ -41,7 +38,7 @@ export async function GET()
         return withCORS(NextResponse.json('Too many requests. Try later!',{status: 429}));
     }
     await limiter.removeTokens(1);
-    return withCORS(NextResponse.json(bugDatas));
+    return withCORS(NextResponse.json(answers));
 }
 
 export async function POST(request: NextRequest)
@@ -50,13 +47,18 @@ export async function POST(request: NextRequest)
     {
         return withCORS(NextResponse.json('Too many requests. Try later!',{status: 429}));
     }
-    const remaingTokens = await limiter.removeTokens(1);
-    const body = await request.json();
-    const newBug: BugType = {id:body.id, title: body.title, desc:body.desc, userid:body.userId, answered: body.answered, time:body.time};
-    bugDatas.push(newBug);
-    try{fs.writeFileSync(filePath, JSON.stringify({ bugDatas }, null, 2));}
+    await limiter.removeTokens(1);
+    const body = await request.json()
+    const newAnswer: answerType = {
+        id: body.id,
+        fromUserId: body.fromUserId,
+        bugId: body.bugId,
+        answer: body.answer
+    }
+    answers.push(newAnswer)
+    try{fs.writeFileSync(filePath, JSON.stringify({answers}, null, 2))}
     catch(error){return withCORS(NextResponse.json({ error: "Failed to write data" }, { status: 500 }));}
-    return withCORS(NextResponse.json(bugDatas));
+    return withCORS(NextResponse.json(answers));
 }
 
 export async function PUT(request: NextRequest)
@@ -67,14 +69,18 @@ export async function PUT(request: NextRequest)
     }
     const remaingTokens = await limiter.removeTokens(1);
     const body = await request.json();
-    const updateBug: BugType = {id:body.id, title: body.title, desc:body.desc, userid:body.user, answered: body.answered, time:body.time};
-    const { id, title, desc, userid, answered} = body;
-    const bugIndex: number = getBugIndexById(id);
-    bugDatas[bugIndex].title = title;
-    bugDatas[bugIndex].desc = desc;
-    try{fs.writeFileSync(filePath, JSON.stringify({ bugDatas }, null, 2));}
+    const updateAnswer: answerType = {
+        id: body.id,
+        fromUserId: body.fromUserId,
+        bugId: body.bugId,
+        answer: body.answer
+    }
+    const { id,fromUserId, bugId, answer } = body;
+    const answerIndex: number = getAnswerIndexById(id);
+    answers[answerIndex].answer = answer;
+    try{fs.writeFileSync(filePath, JSON.stringify({ answers }, null, 2));}
     catch(error){return withCORS(NextResponse.json({ error: "Failed to write data" }, { status: 500 }));}
-    return withCORS(NextResponse.json(bugDatas));
+    return withCORS(NextResponse.json(answers));
 }
 
 export async function DELETE(request: NextRequest)
@@ -85,11 +91,16 @@ export async function DELETE(request: NextRequest)
     }
     const remaingTokens = await limiter.removeTokens(1);
     const body = await request.json();
-    const updateBug: BugType = {id:body.id, title: body.title, desc:body.desc, userid:body.user, answered: body.answered, time:body.time};
+    const updateAnswer: answerType = {
+        id: body.id,
+        fromUserId: body.fromUserId,
+        bugId: body.bugId,
+        answer: body.answer
+    }
     const { id } = body;
-    const bugIndex: number = getBugIndexById(id);
-    bugDatas.splice(bugIndex, 1);
-    try{fs.writeFileSync(filePath, JSON.stringify({ bugDatas }, null, 2));}
+    const answerIndex: number = getAnswerIndexById(id);
+    answers.splice(answerIndex, 1);
+    try{fs.writeFileSync(filePath, JSON.stringify({ answers }, null, 2));}
     catch(error){return withCORS(NextResponse.json({ error: "Failed to write data" }, { status: 500 }));}
-    return withCORS(NextResponse.json(bugDatas));
+    return withCORS(NextResponse.json(answers));
 }

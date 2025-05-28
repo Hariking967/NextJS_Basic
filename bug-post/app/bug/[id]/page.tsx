@@ -8,7 +8,7 @@ export default function page({params: {id}} : Props) {
     let desc = "desc";
     let userId = 0;
     let username = "uname";
-    let bugDatas = data.bugs;
+    let bugDatas = data.bugDatas;
     bugDatas.forEach(bug=>{
         if (bug.id == id)
         {
@@ -20,16 +20,15 @@ export default function page({params: {id}} : Props) {
     const descContent = desc.split('\n');
     const descElement = descContent.map((line, index)=>(
         <div key={index}>
-            <p>{line}</p>
+            <p className='ml-5 text-2xl'>{line}</p>
         </div>
         ));
     
   return (
     <div className='flex flex-col'>
         <p>Posted by: {getUserById(userId)}</p>
-        <div className='flex flex-row h-20 items-center'>
-            <p className='text-5xl mr-10'>{id}</p>
-            <p className='text-5xl'>{title}</p>
+        <div className='flex flex-row h-20 items-center ml-5'>
+            <p className='text-5xl ml-5'>{title}</p>
         </div>
         <hr></hr>
         {descElement}

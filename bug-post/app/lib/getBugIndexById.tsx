@@ -1,7 +1,7 @@
 import React from 'react'
 import data from '../data/bugs.json'
 
-const bugDatas = data.bugs;
+const bugDatas = data.bugDatas;
 
 export default function getBugIndexById(bugId: number) {
     let ind = -1;
