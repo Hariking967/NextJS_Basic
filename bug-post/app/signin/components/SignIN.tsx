@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -13,7 +13,7 @@ export default function SingIN() {
     if (form.userName == '') {alert("Please enter username");return;}
     if (form.email == '') {alert("Please enter email");return;}
     if (form.pwd == '') {alert("Please enter password");return;}
-    const GETuserData = await fetch('http://localhost:3000/api/userapi', {
+    const GETuserData = await fetch('/api/userapi', {
       method : 'GET',
       headers: {
       'Content-Type': 'application/json',
@@ -24,15 +24,11 @@ export default function SingIN() {
     const getData = await GETuserData.json();
     let contains = -1;
     for (let i=0; i < getData.length; i++){
-      console.log(i);
-      console.log(form.userName);
-      console.log(getData[i].userName);
       if (form.userName == getData[i].userName)
       {
         contains = i;
       }
     }
-    console.log(contains);
     if (contains == -1)
     {
       let errorp = document.getElementById('error_msg')
@@ -63,14 +59,13 @@ export default function SingIN() {
 
     //change cookies
     const userId = getData[contains].id;
-
+    console.log("Sign IN userId: ", userId)
     await fetch('/api/set-cookie', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId }),
       credentials: 'include',
     });
-    window.location.href='/';
     router.push('/');
   }
   function handleChange(e: React.ChangeEvent<HTMLInputElement>)

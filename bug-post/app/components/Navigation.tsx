@@ -7,8 +7,18 @@ import Logout from './Logout'
 export default async function Navigation() {
     const cookieStore = await cookies()
     const datac = cookieStore.get('loggedin');
-    let loggedin = Number(datac?.value);
-    console.log(loggedin);
+    console.log("datac:",datac);
+    let loggedin: number|undefined = -1
+    if (datac == undefined)
+    {
+        loggedin = undefined
+    }
+    else
+    {
+        loggedin = Number(datac?.value);
+    }
+    // loggedin = Number(datac?.value);
+    // console.log(loggedin);
     const logElement = ()=>{
         if (loggedin == undefined || loggedin == -1)
         {
