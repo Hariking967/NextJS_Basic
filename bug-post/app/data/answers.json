@@ -6,6 +6,18 @@
             "fromUserId": 2,
             "bugId": 6,
             "answer":"array index starts form 0 and goes till one les than the length of array"
+        },
+        {
+            "id":2,
+            "fromUserId": 2,
+            "bugId": 6,
+            "answer":"array index starts form 0 and goes till one les than the length of array"
+        },
+        {
+            "id":3,
+            "fromUserId": 2,
+            "bugId": 6,
+            "answer":"array index starts form 0 and goes till one les than the length of array"
         }
     ]
 }

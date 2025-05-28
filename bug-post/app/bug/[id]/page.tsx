@@ -1,6 +1,8 @@
 import React from 'react'
 import data from '../../data/bugs.json'
 import getUserById from '../../lib/getUserById'
+import Answers from './components/Answers'
+import NewAnswer from './components/NewAnswer'
 type Props = { params : {id : number} }
 
 export default function page({params: {id}} : Props) {
@@ -17,21 +19,14 @@ export default function page({params: {id}} : Props) {
             userId = bug.userid;
         }
     })
-    const descContent = desc.split('\n');
-    const descElement = descContent.map((line, index)=>(
-        <div key={index}>
-            <p className='ml-5 text-2xl'>{line}</p>
-        </div>
-        ));
-    
   return (
     <div className='flex flex-col'>
         <p>Posted by: {getUserById(userId)}</p>
-        <div className='flex flex-row h-20 items-center ml-5'>
-            <p className='text-5xl ml-5'>{title}</p>
-        </div>
+        <p className='text-5xl ml-5 mb-5 mt-5'>{title}</p>
         <hr></hr>
-        {descElement}
+        <pre className='text-3xl p-5'>{desc}</pre>
+        <NewAnswer bugId = {id}></NewAnswer>
+        <Answers bugId = {id}></Answers>
     </div>
   )
 }

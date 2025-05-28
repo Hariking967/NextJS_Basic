@@ -52,7 +52,7 @@ export async function POST(request: NextRequest)
     }
     const remaingTokens = await limiter.removeTokens(1);
     const body = await request.json();
-    const newBug: BugType = {id:body.id, title: body.title, desc:body.desc, userid:body.userId, answered: body.answered, time:body.time};
+    const newBug: BugType = {id:body.id, title: body.title, desc:body.desc, userid:body.userid, answered: body.answered, time:body.time};
     bugDatas.push(newBug);
     try{fs.writeFileSync(filePath, JSON.stringify({ bugDatas }, null, 2));}
     catch(error){return withCORS(NextResponse.json({ error: "Failed to write data" }, { status: 500 }));}

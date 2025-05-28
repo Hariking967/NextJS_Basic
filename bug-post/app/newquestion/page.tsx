@@ -7,7 +7,6 @@ export default function page() {
   let [title, setTitle] = useState('');
   let [desc, setDesc] = useState('');
 
-
    useEffect(()=>{
       async function fetchCookie(){
         const res = await fetch('/api/set-cookie',{
@@ -56,7 +55,6 @@ export default function page() {
         credentials: 'include'
     });
   }
-
   return (
     <div className='flex flex-col justify-center bg-green-500 mr-120 ml-120 mt-20 rounded-2xl p-3'>
         <p className='leading-loose text-4xl'>Title</p>
