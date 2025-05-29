@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation';
 
-export default function SingIN() {
+export default function Signup() {
   const [form, setForm] = useState({userName: '', email: '', pwd: ''});
   const router = useRouter();
   async function handleSubmit(e: React.FormEvent)
