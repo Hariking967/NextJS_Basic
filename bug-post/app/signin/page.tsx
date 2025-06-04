@@ -6,3 +6,4 @@ export default function page() {
     <SignIN></SignIN>
   )
 }
+// need to do this and sign up again from scratch

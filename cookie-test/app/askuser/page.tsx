@@ -1,18 +1,28 @@
-import React from "react";
-import { redirect } from "next/navigation";
+'use server';
+
 import { cookies } from 'next/headers';
-export default async function AskUserPage() {
-    async function handleSubmit() {
-            
-        }
+import { redirect } from 'next/navigation';
+
+export async function setCookieAction(formData: FormData) {
+  const value = formData.get('value') as string;
+
+  const cookieStore = cookies();
+  cookieStore.set('my-cookie-name', value, {
+    path: '/',
+    httpOnly: true,
+    maxAge: 60 * 60 * 24,
+  });
+
+  redirect('/');
+}
+
+export default function AskUserPage() {
   return (
-    <form action={ async function handleSubmit(formData: FormData){
-        const value = formData.get('value') as string;
-            const cookieStore = await cookies(); // ✅ don't await
-            cookieStore.set('name', value, { path: '/', maxAge: 3600 });
-            redirect('/');
-    }}>
-      <input type="text" name="value" />
+    <form action={setCookieAction}>
+      <label>
+        Enter value:
+        <input type="text" name="value" />
+      </label>
       <button type="submit">Set Cookie</button>
     </form>
   );

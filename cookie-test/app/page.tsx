@@ -1,8 +1,8 @@
-import { cookies } from 'next/headers'
+import { cookies } from 'next/headers';
 
-export default async function HomePage() {
-  const name = (await cookies()).get( "name")?.value;
-  return(
-    <p>{name}</p>
-  )
+export default function HomePage() {
+  const cookieStore = cookies();
+  const myCookie = cookieStore.get('my-cookie-name')?.value ?? 'No cookie set';
+
+  return <p>Cookie value: {myCookie}</p>;
 }
