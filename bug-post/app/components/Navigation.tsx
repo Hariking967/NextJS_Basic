@@ -1,10 +1,8 @@
-// Navigation.tsx (server component)
-
 import React from "react";
 import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/auth";
-import AuthButtons from "./AuthButtons"; // client component for signIn/signOut buttons
+import AuthButtons from "./AuthButtons"; // client component
 
 export default async function Navigation() {
   const session = await getServerSession(authOptions);

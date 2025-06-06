@@ -1,14 +1,43 @@
 "use client";
 
+import React from "react";
 import { signIn, signOut } from "next-auth/react";
 
-export default function AuthButtons({ loggedIn }: { loggedIn: boolean }) {
-  const handleLogout = async () => {
-    // Sign out from your app
-    await signOut({ redirect: false, callbackUrl: '/' });
+interface AuthButtonsProps {
+  loggedIn: boolean;
+}
 
-    // Then redirect to GitHub logout page, which redirects back to your site
-    window.location.href = "https://github.com/logout";
+export default function AuthButtons({ loggedIn }: AuthButtonsProps) {
+  // Logout handler
+  const handleLogout = () => {
+    signOut({ redirect: false }).then(() => {
+      const githubLogoutUrl = "https://github.com/logout";
+      const redirectAfterLogout = "/";
+
+      const popup = window.open(
+        githubLogoutUrl,
+        "GitHub Logout",
+        "width=600,height=600"
+      );
+
+      if (!popup) {
+        alert("Please allow popups for this site to logout properly.");
+        window.location.href = redirectAfterLogout;
+        return;
+      }
+
+      const timer = setInterval(() => {
+        if (popup.closed) {
+          clearInterval(timer);
+          window.location.href = redirectAfterLogout;
+        }
+      }, 500);
+    });
+  };
+
+  // Signin handler, forcing account selection
+  const handleLogin = () => {
+    signIn("github", { prompt: "login" });
   };
 
   return loggedIn ? (
@@ -16,17 +45,12 @@ export default function AuthButtons({ loggedIn }: { loggedIn: boolean }) {
       className="text-white bg-red-600 px-4 py-2 rounded"
       onClick={handleLogout}
     >
-      Sign Out
+      Logout
     </button>
   ) : (
     <button
       className="text-white bg-green-600 px-4 py-2 rounded"
-      onClick={() =>
-        signIn("github", {
-          prompt: "login", // ✅ always shows GitHub login prompt
-          callbackUrl: "/", // ✅ redirect after login
-        })
-      }
+      onClick={handleLogin}
     >
       Sign In
     </button>
