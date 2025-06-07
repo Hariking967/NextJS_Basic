@@ -1,0 +1,4 @@
+Note:
+1)
+    no of answers = 1 means no one answered
+    actual answered = answered - 1

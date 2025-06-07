@@ -1,56 +1,26 @@
 'use client'
-import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useTransition } from 'react'
+import addAnswer from '@/app/lib/addAnswer';
 
 type Props = {
-    bugId:number
+    bugId:string
 }
 
 export default function NewAnswer({bugId}:Props) {
     let [ans, setAns] = useState("")
     let [userId, setUserId] = useState(-1)
-    useEffect(()=>{
-          async function fetchCookie(){
-            const res = await fetch('/api/set-cookie',{
-            method: 'GET',
-            credentials: 'include'
-          });
-          const data = await res.json();
-          if (data.loggedin)
-          {
-            setUserId(Number(data.loggedin));
-          }
-          }
-          fetchCookie();
-        //   if (userId == -1)
-        //   {
-        //     window.location.href = '/signup'
-        //   }
-        },[]);
-    async function handleSubmit()
+    let [isPending, startTransition] = useTransition()
+    function handleSubmit(e: React.FormEvent)
     {
-        const GETuserData = await fetch('http://localhost:3000/api/answersapi', {
-            method : 'GET',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            credentials: 'include'
-        });
-        const answerDatas = await GETuserData.json()
-        let newAnswerId = answerDatas.length()
-        const answerData = await fetch('http://localhost:3000/api/answersapi', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: newAnswerId,
-                fromUserId: userId,
-                bugId: bugId,
-                answer: ans
-            })
-        })
-    }
+        e.preventDefault()
+        startTransition(() => {
+        (async () => {
+          await addAnswer({ bugId, ans });
+          setAns(''); 
+          window.location.href = `/bug/${bugId}`
+        })();
+});
+        }
   return (
     <>
       <hr />

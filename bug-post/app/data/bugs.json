@@ -119,6 +119,14 @@
       "answered": 0,
       "userid": 1,
       "time": "2025-05-28T01:36:42.742Z"
+    },
+    {
+      "id": 16,
+      "title": "Reverse a String in JavaScript",
+      "desc": "function reverseString(str) {\n  return str.split('').reverse().join('');\n}\n\nconsole.log(reverseString(\"hello\")); // Output: \"olleh\"\n",
+      "userid": -1,
+      "answered": "false",
+      "time": "2025-06-07T19:36:31.807Z"
     }
   ]
 }

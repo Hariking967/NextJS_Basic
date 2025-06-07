@@ -1,27 +1,30 @@
 import React from 'react'
-import data from '../../data/bugs.json'
-import getUserById from '../../lib/getUserById'
+// import data from '../../data/bugs.json'
+// import getUserById from '../../lib/getUserById'
 import Answers from './components/Answers'
 import NewAnswer from './components/NewAnswer'
-type Props = { params : {id : number} }
+// import { getServerSession } from 'next-auth'
+import {prisma} from "@/app/lib/prisma"
 
-export default function page({params: {id}} : Props) {
-    let title = "title";
-    let desc = "desc";
-    let userId = 0;
-    let username = "uname";
-    let bugDatas = data.bugDatas;
-    bugDatas.forEach(bug=>{
-        if (bug.id == id)
-        {
-            title = bug.title;
-            desc = bug.desc;
-            userId = bug.userid;
-        }
+type Props = { params : {id : string} }
+
+export default async function page({params: {id}} : Props) {
+    let bugData = await prisma.bug.findFirst(
+      {where: {
+        id: id
+      }}
+    )
+    let title = bugData?.title || "title";
+    let desc = bugData?.desc || "desc";
+    let userId = bugData?.userId || "userId";
+    
+    let userData = await prisma.user.findFirst({
+      where: {id: userId}
     })
+    let userName = userData?.userName;
   return (
     <div className='flex flex-col'>
-        <p>Posted by: {getUserById(userId)}</p>
+        <p>Posted by: {userName}</p>
         <p className='text-5xl ml-5 mb-5 mt-5'>{title}</p>
         <hr></hr>
         <pre className='text-3xl p-5'>{desc}</pre>
