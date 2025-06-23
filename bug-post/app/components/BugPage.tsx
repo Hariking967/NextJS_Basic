@@ -16,11 +16,11 @@ export default async function BugPage() {
     let bugContent = bugDatas.map(bug=>(
         <Link key={bug.id} href= {`/bug/${bug.id}`}>
             <div className='flex flex-row gap-4 p-4 m-3 rounded-xl bg-gray-700 hover:bg-gray-600 transition-all shadow-md cursor-pointer'>
-                <p>{bug.answered} answered</p>
                 <div className='flex flex-col w-[90vw]'>
                     <p className='text-3xl m-3 truncate'>{bug.title}</p>
                     <p className='text-3xl m-3 truncate'>{bug.desc}</p>
                     <p className='text-3xl m-3'>Posted by: {convert(bug.userId||"bug")}</p>
+                    <p>{bug.answered} answered</p>
                 </div>
             </div>
             

@@ -23,9 +23,10 @@ export default async function page({params: {id}} : Props) {
     })
     let userName = userData?.userName;
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col bg-gray-800'>
         <p>Posted by: {userName}</p>
         <p className='text-5xl ml-5 mb-5 mt-5'>{title}</p>
+        <hr></hr>
         <hr></hr>
         <pre className='text-3xl p-5'>{desc}</pre>
         <NewAnswer bugId = {id}></NewAnswer>
