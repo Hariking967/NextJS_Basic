@@ -1,0 +1,8 @@
+cd bugpost
+docker run --rm -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust postgres
+pnpm i -D prisma
+pnpm i @prisma/client
+npm prisma init
+npx prisma migrate dev --name "type the name of change you made"
+in package.json do "build": "prisma generate && next build" on line 7
+pnpm i -D ts-node
