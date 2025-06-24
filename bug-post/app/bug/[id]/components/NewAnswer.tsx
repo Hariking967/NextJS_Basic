@@ -1,6 +1,5 @@
 'use client'
 import { useState, useTransition } from 'react'
-import addAnswer from '@/app/lib/addAnswer';
 
 type Props = {
     bugId:string
@@ -15,7 +14,14 @@ export default function NewAnswer({bugId}:Props) {
         e.preventDefault()
         startTransition(() => {
         (async () => {
-          await addAnswer({ bugId, ans });
+          await fetch("/api/addans",{
+            method: 'POST',
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({
+              answer: ans,
+              bugId: bugId
+            })
+          });
           setAns(''); 
           window.location.href = `/bug/${bugId}`
         })();

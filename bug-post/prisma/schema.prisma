@@ -37,7 +37,7 @@ model Bug {
   id       String   @id @default(uuid())
   title    String
   desc     String
-  answered Int      @default(autoincrement())
+  answered Int      @default(0)
   created  DateTime @default(now())
   updated  DateTime @updatedAt
   User     User?    @relation(fields: [userId], references: [id])

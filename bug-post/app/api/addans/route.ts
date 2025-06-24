@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { prisma } from '@/app/lib/prisma'
 import { authOptions } from "@/auth";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/dist/server/api-utils";
 
 export async function POST(request: NextRequest)
 {
@@ -14,15 +15,20 @@ export async function POST(request: NextRequest)
         const userFind = await prisma.user.findFirst({
             where: {userName: userName}
         })
-        const userId = userFind?.id
+        const userId = userFind?.id 
+        
+        const answer = await prisma.answer.create({
+            data: {
+                answer: body.answer,
+                fromUserId: userId,
+                bugId: body.bugId
+            }
+        })
+
+        const bug = await prisma.bug.update({
+            where: {id: body.bugId},
+            data: {answered: {increment: 1}}
+        })
+        return NextResponse.json(answer);
     }
-    
-    const answer = await prisma.answer.create({
-        data: {
-            answer: body.answer,
-            fromUserId: body.userId,
-            bugId: body.bugId
-        }
-    })
-    return NextResponse.json(answer);
 }

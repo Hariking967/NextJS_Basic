@@ -58,8 +58,8 @@ export default async function Answers({bugId}:Props) {
                 {answer.answer}
               </p>
               <div className='flex flex-row'>
-                <Upvote id={answer.id} vote={answer.upvote}></Upvote>
-                <Downvote id={answer.id} vote={answer.upvote}></Downvote>
+                <Upvote answer={answer}></Upvote>
+                <Downvote answer={answer}></Downvote>
               </div>
             </div>
         )
