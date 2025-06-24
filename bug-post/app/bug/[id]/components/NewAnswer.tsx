@@ -31,12 +31,27 @@ export default function NewAnswer({bugId}:Props) {
     <>
       <hr />
       <br />
-      <p className='text-4xl bg-gray-900 text-white font-sans w-[100vw] p-5 ml-5'>Write your answer:</p>
-      <div className='flex flex-col items-start bg-black'>
-        <textarea onChange={e=>setAns(e.target.value)} value={ans} className='bg-black text-3xl text-white h-50 ml-5 w-500 mr-10 mb-0'></textarea>
-        <button onClick={handleSubmit} className='bg-blue-500 p-5 ml-5 text-2xl mt-2 mr-5'>Post 🖋️</button>
+      <p className="text-4xl bg-gray-900 text-white font-sans w-full p-5 pl-8">Write your answer:</p>
+
+      <div className="flex flex-col bg-gray-900 p-6 w-full">
+        <label className="text-white text-xl mb-2 ml-1">Your Answer:</label>
+        <textarea
+          onChange={e => setAns(e.target.value)}
+          value={ans}
+          placeholder="Type your answer here..."
+          className="bg-black text-white text-lg p-4 rounded-lg resize-none min-h-[200px] mb-4 w-full"
+        />
+        <div className="flex justify-end w-full">
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-500 hover:bg-blue-600 text-white text-xl font-semibold py-3 px-6 rounded-lg transition duration-200"
+          >
+            Post 🖋️
+          </button>
+        </div>
       </div>
     </>
+
     
   )
 }
